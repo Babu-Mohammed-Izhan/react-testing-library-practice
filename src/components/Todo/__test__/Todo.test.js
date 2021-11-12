@@ -32,4 +32,25 @@ describe("functionality of the todo component", () => {
     const listelement = screen.getAllByText(/Example Text/i);
     expect(listelement.length).toBe(3);
   });
+
+  test("new todo should not have completed class styling", async () => {
+    render(<MockTodo />);
+    const inputelement = screen.getByPlaceholderText(/Add a new task here.../i);
+    const buttonelement = screen.getByRole("button", { name: /Add/i });
+    fireEvent.change(inputelement, { target: { value: "Example Text" } });
+    fireEvent.click(buttonelement);
+    const divelement = screen.getByText(/Example Text/i);
+    expect(divelement).not.toHaveClass("todo-item-active");
+  });
+
+  test("new todo should have completed class styling when we click on it", async () => {
+    render(<MockTodo />);
+    const inputelement = screen.getByPlaceholderText(/Add a new task here.../i);
+    const buttonelement = screen.getByRole("button", { name: /Add/i });
+    fireEvent.change(inputelement, { target: { value: "Example Text" } });
+    fireEvent.click(buttonelement);
+    const divelement = screen.getByText(/Example Text/i);
+    fireEvent.click(divelement);
+    expect(divelement).toHaveClass("todo-item-active");
+  });
 });

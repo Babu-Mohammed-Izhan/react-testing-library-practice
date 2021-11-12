@@ -6,3 +6,9 @@ test("renders text passed into header component", () => {
   const headingElement = screen.getByText(/My Header/i);
   expect(headingElement).toBeInTheDocument();
 });
+
+test("renders h1 tag", () => {
+  render(<Header title="My Header" />);
+  const headingElement = screen.getByRole("heading");
+  expect(headingElement).toBeInTheDocument();
+});
